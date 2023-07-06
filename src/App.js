@@ -12,8 +12,12 @@ import DailyCheck from "./components/dailycheck/DailyCheck";
 import MyPage from "./components/mypage/MyPage";
 import PeriodCheck from "./components/periodcheck/PeriodCheck";
 import "./styles/Common.css";
+import MyPage from "./component/mypage/MyPage";
+import DailyCheck from "./component/dailycheck/DailyCheck";
+import PeriodCheck from "./component/periodcheck/PeriodCheck";
 
 function App() {
+
     return (
         <BrowserRouter>
             <Header />
@@ -30,6 +34,8 @@ function App() {
             </Routes>
         </BrowserRouter>
     );
+
+
 }
 
 export default App;
