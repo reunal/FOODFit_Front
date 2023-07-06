@@ -19,7 +19,7 @@ const DailyCheck = () => {
         const fetchData = async () => {
             try {
                 let token =
-                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NDY4MDU3LCJleHAiOjE2ODg0Njk4NTd9.l_6mjbhAyw7gz0sIHyJ-4DLoHCeWNoBPhNX49oNciLU";
+                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NjM3NTgwLCJleHAiOjE2ODg2MzkzODB9.qIzpjgzc4dsr6yO8BaXIuDf6p1g-TPCdWZB0mC3An3k";
                 const res = await axios.get(`${API_URL}/api/analysis/daily`, {
                     headers: {
                         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const DailyCheck = () => {
                     />
                 </div>
                 <div className="bar">
-                    <p className="element">탄수화물</p>
+                    <p className="element">나트륨</p>
                     <ProgressBar
                         className="progress"
                         completed={progressData.totalSaltPerDay}

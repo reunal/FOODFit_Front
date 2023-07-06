@@ -3,7 +3,14 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    ResponsiveContainer,
+    ReferenceLine,
+} from "recharts";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -50,221 +57,197 @@ const PeriodCheck = () => {
     eDate = eDate.split(" ");
     eDate = `${eDate[3]}-${month[eDate[1]]}-${eDate[2]}`;
 
-    console.log(selectedType);
+    useEffect(() => {
+        const fetchTypeData = async () => {
+            try {
+                let token =
+                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NjQzMTQ5LCJleHAiOjE2ODg2NDQ5NDl9.-eT4jTnOzI_fhTgaS5ZHncB2n-B7--lSjZdodAxvK9E";
 
-    // useEffect(() => {
-    //     const fetchTypeData = async () => {
-    //         try {
-    //             let token =
-    //                 "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NDY4MDU3LCJleHAiOjE2ODg0Njk4NTd9.l_6mjbhAyw7gz0sIHyJ-4DLoHCeWNoBPhNX49oNciLU";
+                const res = await axios.get(
+                    `${API_URL}/api/analysis/period?startDate=${sDate}&endDate=${eDate}&nutrient=${selectedType}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
 
-    //             const res = await axios.get(
-    //                 `${API_URL}/api/analysis/period?startDate=${sDate}&endDate=${eDate}&nutrient=${selectedType}`,
-    //                 {
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         Authorization: `Bearer ${token}`,
-    //                     },
-    //                 }
-    //             );
+                const periodData = res.periodData;
+                setPeriodData(periodData);
+            } catch {
+                console.error("periodData bring Failed!");
+            }
+        };
+        fetchTypeData();
+    }, []);
 
-    //             const data = res.data;
-    //             setPeriodData(data);
-    //             console.log(data);
-    //         } catch {
-    //             console.error("periodData bring Failed!");
-    //         }
-    //     };
-    //     fetchTypeData();
-    // }, []);
+    let data1,
+        data2,
+        data3,
+        data4,
+        data5,
+        data6,
+        data7,
+        data8,
+        data9,
+        data10,
+        data11,
+        data12,
+        data13,
+        data14;
 
-    const data = [
-        {
-            date: "1",
-            dailyTotal: 5,
-        },
-        {
-            date: "2",
-            dailyTotal: 8,
-        },
-        {
-            date: "3",
-            dailyTotal: 4,
-        },
-        {
-            date: "4",
-            dailyTotal: 5,
-        },
-        {
-            date: "5",
-            dailyTotal: 3,
-        },
-        {
-            date: "6",
-            dailyTotal: 1,
-        },
-        {
-            date: "7",
-            dailyTotal: 9,
-        },
-        {
-            date: "8",
-            dailyTotal: 3,
-        },
-        {
-            date: "9",
-            dailyTotal: 7,
-        },
-        {
-            date: "10",
-            dailyTotal: 5,
-        },
-        {
-            date: "11",
-            dailyTotal: 2,
-        },
-        {
-            date: "12",
-            dailyTotal: 1,
-        },
-        {
-            date: "13",
-            dailyTotal: 4,
-        },
-        {
-            date: "14",
-            dailyTotal: 8,
-        },
-        {
-            date: "15",
-            dailyTotal: 6,
-        },
-        {
-            date: "16",
-            dailyTotal: 9,
-        },
-    ];
-
-    console.log(data.length);
-
-    if ((7 < data.length) & (data.length <= 14)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7);
-    } else if ((14 < data.length) & (data.length <= 21)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-    } else if ((21 < data.length) & (data.length <= 28)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21);
-    } else if ((28 < data.length) & (data.length <= 35)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28);
-    } else if ((35 < data.length) & (data.length <= 42)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35);
-    } else if ((42 < data.length) & (data.length <= 49)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35, 42);
-        const data7 = data.slice(42);
-    } else if ((49 < data.length) & (data.length <= 56)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35, 42);
-        const data7 = data.slice(42, 49);
-        const data8 = data.slice(49);
-    } else if ((56 < data.length) & (data.length <= 63)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35, 42);
-        const data7 = data.slice(42, 49);
-        const data8 = data.slice(49, 56);
-        const data9 = data.slice(56);
-    } else if ((63 < data.length) & (data.length <= 70)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35, 42);
-        const data7 = data.slice(42, 49);
-        const data8 = data.slice(49, 56);
-        const data9 = data.slice(56, 63);
-        const data10 = data.slice(63);
-    } else if ((70 < data.length) & (data.length <= 77)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35, 42);
-        const data7 = data.slice(42, 49);
-        const data8 = data.slice(49, 56);
-        const data9 = data.slice(56, 63);
-        const data10 = data.slice(63, 70);
-        const data11 = data.slice(70);
-    } else if ((77 < data.length) & (data.length <= 84)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35, 42);
-        const data7 = data.slice(42, 49);
-        const data8 = data.slice(49, 56);
-        const data9 = data.slice(56, 63);
-        const data10 = data.slice(63, 70);
-        const data11 = data.slice(70, 77);
-        const data12 = data.slice(77);
-    } else if ((84 < data.length) & (data.length <= 91)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35, 42);
-        const data7 = data.slice(42, 49);
-        const data8 = data.slice(49, 56);
-        const data9 = data.slice(56, 63);
-        const data10 = data.slice(63, 70);
-        const data11 = data.slice(70, 77);
-        const data12 = data.slice(77, 84);
-        const data13 = data.slice(84);
-    } else if ((91 < data.length) & (data.length <= 98)) {
-        const data1 = data.slice(0, 7);
-        const data2 = data.slice(7, 14);
-        const data3 = data.slice(14, 21);
-        const data4 = data.slice(21, 28);
-        const data5 = data.slice(28, 35);
-        const data6 = data.slice(35, 42);
-        const data7 = data.slice(42, 49);
-        const data8 = data.slice(49, 56);
-        const data9 = data.slice(56, 63);
-        const data10 = data.slice(63, 70);
-        const data11 = data.slice(70, 77);
-        const data12 = data.slice(77, 84);
-        const data13 = data.slice(84, 91);
-        const data14 = data.slice(91);
+    if (typeof periodData === "undefined") {
+        data1 = [
+            {
+                date: sDate,
+                dailyTotal: 0,
+            },
+        ];
+    } else if ((7 < periodData.length) & (periodData.length <= 14)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7);
+    } else if ((14 < periodData.length) & (periodData.length <= 21)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+    } else if ((21 < periodData.length) & (periodData.length <= 28)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21);
+    } else if ((28 < periodData.length) & (periodData.length <= 35)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28);
+    } else if ((35 < periodData.length) & (periodData.length <= 42)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35);
+    } else if ((42 < periodData.length) & (periodData.length <= 49)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35, 42);
+        data7 = periodData.slice(42);
+    } else if ((49 < periodData.length) & (periodData.length <= 56)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35, 42);
+        data7 = periodData.slice(42, 49);
+        data8 = periodData.slice(49);
+    } else if ((56 < periodData.length) & (periodData.length <= 63)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35, 42);
+        data7 = periodData.slice(42, 49);
+        data8 = periodData.slice(49, 56);
+        data9 = periodData.slice(56);
+    } else if ((63 < periodData.length) & (periodData.length <= 70)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35, 42);
+        data7 = periodData.slice(42, 49);
+        data8 = periodData.slice(49, 56);
+        data9 = periodData.slice(56, 63);
+        data10 = periodData.slice(63);
+    } else if ((70 < periodData.length) & (periodData.length <= 77)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35, 42);
+        data7 = periodData.slice(42, 49);
+        data8 = periodData.slice(49, 56);
+        data9 = periodData.slice(56, 63);
+        data10 = periodData.slice(63, 70);
+        data11 = periodData.slice(70);
+    } else if ((77 < periodData.length) & (periodData.length <= 84)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35, 42);
+        data7 = periodData.slice(42, 49);
+        data8 = periodData.slice(49, 56);
+        data9 = periodData.slice(56, 63);
+        data10 = periodData.slice(63, 70);
+        data11 = periodData.slice(70, 77);
+        data12 = periodData.slice(77);
+    } else if ((84 < periodData.length) & (periodData.length <= 91)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35, 42);
+        data7 = periodData.slice(42, 49);
+        data8 = periodData.slice(49, 56);
+        data9 = periodData.slice(56, 63);
+        data10 = periodData.slice(63, 70);
+        data11 = periodData.slice(70, 77);
+        data12 = periodData.slice(77, 84);
+        data13 = periodData.slice(84);
+    } else if ((91 < periodData.length) & (periodData.length <= 98)) {
+        data1 = periodData.slice(0, 7);
+        data2 = periodData.slice(7, 14);
+        data3 = periodData.slice(14, 21);
+        data4 = periodData.slice(21, 28);
+        data5 = periodData.slice(28, 35);
+        data6 = periodData.slice(35, 42);
+        data7 = periodData.slice(42, 49);
+        data8 = periodData.slice(49, 56);
+        data9 = periodData.slice(56, 63);
+        data10 = periodData.slice(63, 70);
+        data11 = periodData.slice(70, 77);
+        data12 = periodData.slice(77, 84);
+        data13 = periodData.slice(84, 91);
+        data14 = periodData.slice(91);
     }
+
+    const allData = [];
+    for (let i = 1; i <= 14; i++) {
+        const dataKey = `data${i}`;
+        const currentData = eval(dataKey);
+
+        if (typeof currentData !== "undefined") {
+            allData.push(currentData);
+        }
+    }
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrow: true,
+    };
+
+    const nutrientKey = {
+        caloroie: 2000,
+        salt: 5,
+        protein: 50,
+        fat: 70,
+    };
 
     return (
         <div className="period_page">
@@ -293,31 +276,43 @@ const PeriodCheck = () => {
                     />
                 </div>
             </div>
-            <div className="period_graph">
+            <div className="select_div">
                 <select
                     className="select_type"
                     onChange={handleSelectType}
                     value={selectedType}
                 >
                     <option value="caloroie">칼로리</option>
-                    <option value="salt">탄수화물</option>
+                    <option value="salt">나트륨</option>
                     <option value="protein">단백질</option>
                     <option value="fat">지방</option>
                 </select>
-                <div className="graph_data">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                            width={150}
-                            height={40}
-                            border_radius={"10px"}
-                            data={data}
-                        >
-                            <Bar dataKey="dailyTotal" fill="#B8E0D2" />
-                            <XAxis dataKey="date" />
-                            <YAxis />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
+            </div>
+            <div className="period_graph">
+                <Slider {...settings} className="slider">
+                    {allData.map((item, index) => (
+                        <div className="graph_data">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart
+                                    width={150}
+                                    height={40}
+                                    border_radius={"10px"}
+                                    data={item}
+                                >
+                                    <ReferenceLine
+                                        y={nutrientKey[selectedType]}
+                                        label={selectedType}
+                                        stroke="red"
+                                        strokeDasharray="3 3"
+                                    />
+                                    <Bar dataKey="dailyTotal" fill="#B8E0D2" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    ))}
+                </Slider>
             </div>
             <div className="button_group">
                 <button className="home_btn" onClick={moveHomePage}>
