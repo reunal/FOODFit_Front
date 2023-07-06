@@ -63,8 +63,7 @@ const MyPage = () => {
     useEffect(() => {
         (async () => {
             try {
-                let token =
-                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg4NjUwMzEzLCJleHAiOjE2ODg2NTIxMTN9.aGtaVgtigj7qcOpIFZ1BN-1npifpXglHqqolb6qM_-4";
+                let token = localStorage.getItem("accessToken");
                 const res = await axios.get(`${API_URL}/api/user`, {
                     headers: {
                         "Content-Type": "application/json",
