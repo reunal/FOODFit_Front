@@ -9,6 +9,9 @@ import HomeLayout from "./components/HomeLayout";
 import Board from "./components/board/Board";
 import Write from "./components/board/Write";
 import "./styles/Common.css";
+import MyPage from "./component/mypage/MyPage";
+import DailyCheck from "./component/dailycheck/DailyCheck";
+import PeriodCheck from "./component/periodcheck/PeriodCheck";
 
 function App() {
   return (
@@ -20,7 +23,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/board" element={<Board />} />
         <Route path="/write" element={<Write />} />
-        <Route exact path="/*" element={<NotFounded />}></Route>
+        <Route path="/mypage" element={<MyPage />}></Route>
+        <Route path="/daily" element={<DailyCheck />}></Route>
+        <Route path="/period" element={<PeriodCheck />}></Route>
+        <Route exact path="/*" element={<NotFounded />} />
       </Routes>
     </BrowserRouter>
   );
