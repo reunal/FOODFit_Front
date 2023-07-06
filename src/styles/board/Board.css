@@ -1,0 +1,55 @@
+.boardContainer {
+  height: 84vh;
+}
+
+.post {
+  height: 40%;
+  margin-bottom: 5%;
+}
+
+.header {
+  display: flex;
+  height: 10%;
+  align-items: center;
+  margin-left: 3%;
+}
+
+.header img {
+  height: 100%;
+  border-radius: 50%;
+}
+
+.header .userName {
+  margin-left: 5%;
+}
+
+.post .content {
+  width: 100%;
+  height: 90%;
+  margin-left: 3%;
+}
+
+.post .content .postImg {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  object-fit: contain;
+  margin-left: -3%;
+  border: 1px solid black;
+}
+
+.post .content .tagBox {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 3%;
+}
+
+.post .content .tag {
+  background: #bbe0d2;
+  border: 1px solid #b8e0d2;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 0 3%;
+  margin-right: 5%;
+  margin-bottom: 3%;
+}
