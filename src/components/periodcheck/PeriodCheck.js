@@ -60,9 +60,7 @@ const PeriodCheck = () => {
     useEffect(() => {
         const fetchTypeData = async () => {
             try {
-                let token =
-                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NjQzMTQ5LCJleHAiOjE2ODg2NDQ5NDl9.-eT4jTnOzI_fhTgaS5ZHncB2n-B7--lSjZdodAxvK9E";
-
+                let token = localStorage.getItem("accessToken");
                 const res = await axios.get(
                     `${API_URL}/api/analysis/period?startDate=${sDate}&endDate=${eDate}&nutrient=${selectedType}`,
                     {
@@ -73,14 +71,15 @@ const PeriodCheck = () => {
                     }
                 );
 
-                const periodData = res.periodData;
+                const periodData = res.data;
+                console.log("t:", periodData);
                 setPeriodData(periodData);
             } catch {
                 console.error("periodData bring Failed!");
             }
         };
         fetchTypeData();
-    }, []);
+    }, [startDate, endDate]);
 
     let data1,
         data2,
@@ -104,123 +103,162 @@ const PeriodCheck = () => {
                 dailyTotal: 0,
             },
         ];
-    } else if ((7 < periodData.length) & (periodData.length <= 14)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7);
-    } else if ((14 < periodData.length) & (periodData.length <= 21)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-    } else if ((21 < periodData.length) & (periodData.length <= 28)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21);
-    } else if ((28 < periodData.length) & (periodData.length <= 35)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28);
-    } else if ((35 < periodData.length) & (periodData.length <= 42)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35);
-    } else if ((42 < periodData.length) & (periodData.length <= 49)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35, 42);
-        data7 = periodData.slice(42);
-    } else if ((49 < periodData.length) & (periodData.length <= 56)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35, 42);
-        data7 = periodData.slice(42, 49);
-        data8 = periodData.slice(49);
-    } else if ((56 < periodData.length) & (periodData.length <= 63)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35, 42);
-        data7 = periodData.slice(42, 49);
-        data8 = periodData.slice(49, 56);
-        data9 = periodData.slice(56);
-    } else if ((63 < periodData.length) & (periodData.length <= 70)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35, 42);
-        data7 = periodData.slice(42, 49);
-        data8 = periodData.slice(49, 56);
-        data9 = periodData.slice(56, 63);
-        data10 = periodData.slice(63);
-    } else if ((70 < periodData.length) & (periodData.length <= 77)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35, 42);
-        data7 = periodData.slice(42, 49);
-        data8 = periodData.slice(49, 56);
-        data9 = periodData.slice(56, 63);
-        data10 = periodData.slice(63, 70);
-        data11 = periodData.slice(70);
-    } else if ((77 < periodData.length) & (periodData.length <= 84)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35, 42);
-        data7 = periodData.slice(42, 49);
-        data8 = periodData.slice(49, 56);
-        data9 = periodData.slice(56, 63);
-        data10 = periodData.slice(63, 70);
-        data11 = periodData.slice(70, 77);
-        data12 = periodData.slice(77);
-    } else if ((84 < periodData.length) & (periodData.length <= 91)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35, 42);
-        data7 = periodData.slice(42, 49);
-        data8 = periodData.slice(49, 56);
-        data9 = periodData.slice(56, 63);
-        data10 = periodData.slice(63, 70);
-        data11 = periodData.slice(70, 77);
-        data12 = periodData.slice(77, 84);
-        data13 = periodData.slice(84);
-    } else if ((91 < periodData.length) & (periodData.length <= 98)) {
-        data1 = periodData.slice(0, 7);
-        data2 = periodData.slice(7, 14);
-        data3 = periodData.slice(14, 21);
-        data4 = periodData.slice(21, 28);
-        data5 = periodData.slice(28, 35);
-        data6 = periodData.slice(35, 42);
-        data7 = periodData.slice(42, 49);
-        data8 = periodData.slice(49, 56);
-        data9 = periodData.slice(56, 63);
-        data10 = periodData.slice(63, 70);
-        data11 = periodData.slice(70, 77);
-        data12 = periodData.slice(77, 84);
-        data13 = periodData.slice(84, 91);
-        data14 = periodData.slice(91);
+    } else if (
+        (7 < periodData.amountList.length) &
+        (periodData.amountList.length <= 14)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7);
+    } else if (
+        (14 < periodData.amountList.length) &
+        (periodData.amountList.length <= 21)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+    } else if (
+        (21 < periodData.amountList.length) &
+        (periodData.amountList.length <= 28)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21);
+    } else if (
+        (28 < periodData.amountList.length) &
+        (periodData.amountList.length <= 35)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28);
+    } else if (
+        (35 < periodData.amountList.length) &
+        (periodData.amountList.length <= 42)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35);
+    } else if (
+        (42 < periodData.amountList.length) &
+        (periodData.amountList.length <= 49)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35, 42);
+        data7 = periodData.amountList.slice(42);
+    } else if (
+        (49 < periodData.amountList.length) &
+        (periodData.amountList.length <= 56)
+    ) {
+        data2 = periodData.amountList.slice(7, 14);
+        data1 = periodData.amountList.slice(0, 7);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35, 42);
+        data7 = periodData.amountList.slice(42, 49);
+        data8 = periodData.amountList.slice(49);
+    } else if (
+        (56 < periodData.amountList.length) &
+        (periodData.amountList.length <= 63)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35, 42);
+        data7 = periodData.amountList.slice(42, 49);
+        data8 = periodData.amountList.slice(49, 56);
+        data9 = periodData.amountList.slice(56);
+    } else if (
+        (63 < periodData.amountList.length) &
+        (periodData.amountList.length <= 70)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35, 42);
+        data7 = periodData.amountList.slice(42, 49);
+        data8 = periodData.amountList.slice(49, 56);
+        data9 = periodData.amountList.slice(56, 63);
+        data10 = periodData.amountList.slice(63);
+    } else if (
+        (70 < periodData.amountList.length) &
+        (periodData.amountList.length <= 77)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35, 42);
+        data7 = periodData.amountList.slice(42, 49);
+        data8 = periodData.amountList.slice(49, 56);
+        data9 = periodData.amountList.slice(56, 63);
+        data10 = periodData.amountList.slice(63, 70);
+        data11 = periodData.amountList.slice(70);
+    } else if (
+        (77 < periodData.amountList.length) &
+        (periodData.amountList.length <= 84)
+    ) {
+        data2 = periodData.amountList.slice(7, 14);
+        data1 = periodData.amountList.slice(0, 7);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35, 42);
+        data7 = periodData.amountList.slice(42, 49);
+        data8 = periodData.amountList.slice(49, 56);
+        data9 = periodData.amountList.slice(56, 63);
+        data10 = periodData.amountList.slice(63, 70);
+        data11 = periodData.amountList.slice(70, 77);
+        data12 = periodData.amountList.slice(77);
+    } else if (
+        (84 < periodData.amountList.length) &
+        (periodData.amountList.length <= 91)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35, 42);
+        data7 = periodData.amountList.slice(42, 49);
+        data8 = periodData.amountList.slice(49, 56);
+        data9 = periodData.amountList.slice(56, 63);
+        data10 = periodData.amountList.slice(63, 70);
+        data11 = periodData.amountList.slice(70, 77);
+        data12 = periodData.amountList.slice(77, 84);
+        data13 = periodData.amountList.slice(84);
+    } else if (
+        (91 < periodData.amountList.length) &
+        (periodData.amountList.length <= 98)
+    ) {
+        data1 = periodData.amountList.slice(0, 7);
+        data2 = periodData.amountList.slice(7, 14);
+        data3 = periodData.amountList.slice(14, 21);
+        data4 = periodData.amountList.slice(21, 28);
+        data5 = periodData.amountList.slice(28, 35);
+        data6 = periodData.amountList.slice(35, 42);
+        data7 = periodData.amountList.slice(42, 49);
+        data8 = periodData.amountList.slice(49, 56);
+        data9 = periodData.amountList.slice(56, 63);
+        data10 = periodData.amountList.slice(63, 70);
+        data11 = periodData.amountList.slice(70, 77);
+        data12 = periodData.amountList.slice(77, 84);
+        data13 = periodData.amountList.slice(84, 91);
+        data14 = periodData.amountList.slice(91);
     }
 
     const allData = [];

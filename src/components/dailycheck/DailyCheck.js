@@ -18,8 +18,7 @@ const DailyCheck = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let token =
-                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NjM3NTgwLCJleHAiOjE2ODg2MzkzODB9.qIzpjgzc4dsr6yO8BaXIuDf6p1g-TPCdWZB0mC3An3k";
+                let token = localStorage.getItem("accessToken");
                 const res = await axios.get(`${API_URL}/api/analysis/daily`, {
                     headers: {
                         "Content-Type": "application/json",
@@ -52,19 +51,19 @@ const DailyCheck = () => {
                         className="progress"
                         completed={progressData.totalCaloriePerDay}
                         maxCompleted={progressData.recommendedCaloriePerDay}
-                        customLabel={`${progressData.totalCaloriePerDay}kacl`}
+                        customLabel={`${progressData.totalCaloriePerDay}`}
                         labelClassName="label"
                         bgColor="#B2F7EF"
                         barContainerClassName="container1"
                     />
                 </div>
                 <div className="bar">
-                    <p className="element">나트륨</p>
+                    <p className="element">나트륨&nbsp;&nbsp;&nbsp;&nbsp;</p>
                     <ProgressBar
                         className="progress"
                         completed={progressData.totalSaltPerDay}
                         maxCompleted={progressData.recommendedSaltPerDay}
-                        customLabel={`${progressData.totalSaltPerDay}kacl`}
+                        customLabel={`${progressData.totalSaltPerDay}`}
                         labelClassName="label"
                         bgColor="#7BDEF2"
                         barContainerClassName="container2"
@@ -76,7 +75,7 @@ const DailyCheck = () => {
                         className="progress"
                         completed={progressData.totalProteinPerDay}
                         maxCompleted={progressData.recommendedProteinPerDay}
-                        customLabel={`${progressData.totalProteinPerDay}g`}
+                        customLabel={`${progressData.totalProteinPerDay}`}
                         labelClassName="label"
                         bgColor="#E7D6E0"
                         barContainerClassName="container3"
@@ -90,7 +89,7 @@ const DailyCheck = () => {
                         className="progress"
                         completed={progressData.totalFatPerDay}
                         maxCompleted={progressData.recommendedFatPerDay}
-                        customLabel={`${progressData.totalFatPerDay}g`}
+                        customLabel={`${progressData.totalFatPerDay}`}
                         labelClassName="label"
                         bgColor="#F2B5D4"
                         barContainerClassName="container4"
