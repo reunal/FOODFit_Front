@@ -6,41 +6,40 @@ const API_URL = "http://43.201.73.166:8080";
 
 const MyPage = () => {
     const navigate = useNavigate();
+    const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+    const [gender, setGender] = useState("");
+    const [profileImage, setProfileImage] = useState("default_profile.png");
 
-    const [img, setImg] = useState("profile04.png");
     const fileInput = useRef(null);
     const imgChange = (e) => {
         if (e.target.files[0]) {
-            setImg(e.target.files[0]);
+            setProfileImage(e.target.files[0]);
         } else {
-            setImg("profile02.png");
+            setProfileImage("profile02.png");
             return;
         }
         const reader = new FileReader();
         reader.onload = () => {
             if (reader.readyState === 2) {
-                setImg(reader.result);
+                setProfileImage(reader.result);
             }
         };
         reader.readAsDataURL(e.target.files[0]);
     };
 
-    const [selectedGender, setSelectedGender] = useState(null);
-
     const handleSelectGender = (e) => {
-        setSelectedGender(e.target.value);
+        setGender(e.target.value);
     };
 
     const saveUserInfo = async () => {
         const userData = {
             name: name,
             age: age,
-            gender: selectedGender,
+            gender: gender,
             profileImage: profileImage,
         };
-        let token =
-            "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NDY4MDU3LCJleHAiOjE2ODg0Njk4NTd9.l_6mjbhAyw7gz0sIHyJ-4DLoHCeWNoBPhNX49oNciLU";
-
+        let token = localStorage.getItem("accessToken");
         await axios
             .put(`${API_URL}/api/user`, userData, {
                 headers: {
@@ -61,16 +60,10 @@ const MyPage = () => {
         navigate("/");
     };
 
-    const [name, setName] = useState("");
-    const [age, setAge] = useState("");
-    const [gender, setGender] = useState("");
-    const [profileImage, setProfileImage] = useState("");
-
     useEffect(() => {
         (async () => {
             try {
-                let token =
-                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NDY4MDU3LCJleHAiOjE2ODg0Njk4NTd9.l_6mjbhAyw7gz0sIHyJ-4DLoHCeWNoBPhNX49oNciLU";
+                let token = localStorage.getItem("accessToken");
                 const res = await axios.get(`${API_URL}/api/user`, {
                     headers: {
                         "Content-Type": "application/json",
@@ -89,6 +82,12 @@ const MyPage = () => {
             }
         })();
     }, []);
+
+    console.log("이미지", profileImage.length);
+
+    if (profileImage.length == 0) {
+        setProfileImage("default_profile.png");
+    }
 
     return (
         <div className="mypage">
@@ -140,7 +139,7 @@ const MyPage = () => {
                     <select
                         className="select_class"
                         onChange={handleSelectGender}
-                        value={selectedGender}
+                        value={gender}
                     >
                         <option disabled hidden selected>
                             gender
