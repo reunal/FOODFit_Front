@@ -38,6 +38,8 @@ const Write = () => {
     });
   };
 
+  const onChangeText = () => {};
+
   const onUpload = async (e) => {
     const files = [...e.target.files];
     const filePromises = files.map(async (file) => {
