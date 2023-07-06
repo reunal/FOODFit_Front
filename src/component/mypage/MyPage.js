@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = "http://202.31.200.86";
+const API_URL = "http://43.201.73.166:8080";
 
 const MyPage = () => {
     const navigate = useNavigate();
@@ -31,16 +31,24 @@ const MyPage = () => {
         setSelectedGender(e.target.value);
     };
 
-    const saveUserInfo = () => {
+    const saveUserInfo = async () => {
         const userData = {
             name: name,
             age: age,
-            gender: gender,
+            gender: selectedGender,
             profileImage: profileImage,
         };
+        let token =
+            "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NDY4MDU3LCJleHAiOjE2ODg0Njk4NTd9.l_6mjbhAyw7gz0sIHyJ-4DLoHCeWNoBPhNX49oNciLU";
 
-        axios
-            .put(API_URL + "/api/user", userData)
+        await axios
+            .put(`${API_URL}/api/user`, userData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    // Authorization: `Bearer ${localStorage.getItem(token)}`,
+                    Authorization: `Bearer ${token}`,
+                },
+            })
             .then(() => {
                 alert("save success");
             })
@@ -61,9 +69,17 @@ const MyPage = () => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await axios.get(API_URL + "/api/user");
+                let token =
+                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NDY4MDU3LCJleHAiOjE2ODg0Njk4NTd9.l_6mjbhAyw7gz0sIHyJ-4DLoHCeWNoBPhNX49oNciLU";
+                const res = await axios.get(`${API_URL}/api/user`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        // Authorization: `Bearer ${localStorage.getItem(token)}`,
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 const userData = await res.data;
-
+                console.log(userData);
                 setName(userData.name);
                 setAge(userData.age);
                 setGender(userData.gender);
@@ -83,7 +99,7 @@ const MyPage = () => {
             <div className="user_profile">
                 <img
                     className="profile_img"
-                    src={img}
+                    src={profileImage}
                     alt="프로필 수정"
                     onClick={() => {
                         fileInput.current.click();
@@ -129,8 +145,8 @@ const MyPage = () => {
                         <option disabled hidden selected>
                             gender
                         </option>
-                        <option value="M">남</option>
-                        <option value="W">여</option>
+                        <option value="MALE">남</option>
+                        <option value="FEMALE">여</option>
                     </select>
                 </div>
             </div>

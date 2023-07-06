@@ -4,25 +4,12 @@ import { useNavigate } from "react-router-dom";
 import ProgressBar from "@ramonak/react-progress-bar";
 import axios from "axios";
 
-const API_URL = "http://202.31.200.86";
+const API_URL = "http://43.201.73.166:8080";
 
 const DailyCheck = () => {
     const navigate = useNavigate();
 
-    const [progressData, setProgressData] = useState({
-        recommended: {
-            calories: 0,
-            salt: 0,
-            protein: 0,
-            fat: 0,
-        },
-        total: {
-            calories: 0,
-            salt: 0,
-            protein: 0,
-            fat: 0,
-        },
-    });
+    const [progressData, setProgressData] = useState("");
 
     const moveHomePage = () => {
         navigate("/");
@@ -31,9 +18,19 @@ const DailyCheck = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(API_URL + "/api/analysis/daily");
+                let token =
+                    "eyJ0eXAiOiJBQ0NFU1NfVE9LRU4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjg4NDY4MDU3LCJleHAiOjE2ODg0Njk4NTd9.l_6mjbhAyw7gz0sIHyJ-4DLoHCeWNoBPhNX49oNciLU";
+                const res = await axios.get(`${API_URL}/api/analysis/daily`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        // Authorization: `Bearer ${localStorage.getItem(token)}`,
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
                 const intakeData = res.data;
                 setProgressData(intakeData);
+                console.log(intakeData);
             } catch (error) {
                 console.error("intakeData bring Failed!");
             }
@@ -53,9 +50,9 @@ const DailyCheck = () => {
                     <p className="element">칼로리&nbsp;&nbsp;&nbsp;&nbsp;</p>
                     <ProgressBar
                         className="progress"
-                        completed={progressData.total.calories}
-                        maxCompleted={progressData.recommended.calories}
-                        customLabel={`${progressData.total.calories}kacl`}
+                        completed={progressData.totalCaloriePerDay}
+                        maxCompleted={progressData.recommendedCaloriePerDay}
+                        customLabel={`${progressData.totalCaloriePerDay}kacl`}
                         labelClassName="label"
                         bgColor="#B2F7EF"
                         barContainerClassName="container1"
@@ -65,9 +62,9 @@ const DailyCheck = () => {
                     <p className="element">탄수화물</p>
                     <ProgressBar
                         className="progress"
-                        completed={progressData.total.salt}
-                        maxCompleted={progressData.recommended.salt}
-                        customLabel={`${progressData.total.salt}kacl`}
+                        completed={progressData.totalSaltPerDay}
+                        maxCompleted={progressData.recommendedSaltPerDay}
+                        customLabel={`${progressData.totalSaltPerDay}kacl`}
                         labelClassName="label"
                         bgColor="#7BDEF2"
                         barContainerClassName="container2"
@@ -77,9 +74,9 @@ const DailyCheck = () => {
                     <p className="element">단백질&nbsp;&nbsp;&nbsp;&nbsp;</p>
                     <ProgressBar
                         className="progress"
-                        completed={progressData.total.protein}
-                        maxCompleted={progressData.recommended.protein}
-                        customLabel={`${progressData.total.protein}g`}
+                        completed={progressData.totalProteinPerDay}
+                        maxCompleted={progressData.recommendedProteinPerDay}
+                        customLabel={`${progressData.totalProteinPerDay}g`}
                         labelClassName="label"
                         bgColor="#E7D6E0"
                         barContainerClassName="container3"
@@ -91,9 +88,9 @@ const DailyCheck = () => {
                     </p>
                     <ProgressBar
                         className="progress"
-                        completed={progressData.total.fat}
-                        maxCompleted={progressData.recommended.fat}
-                        customLabel={`${progressData.total.fat}g`}
+                        completed={progressData.totalFatPerDay}
+                        maxCompleted={progressData.recommendedFatPerDay}
+                        customLabel={`${progressData.totalFatPerDay}g`}
                         labelClassName="label"
                         bgColor="#F2B5D4"
                         barContainerClassName="container4"
