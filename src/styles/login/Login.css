@@ -1,0 +1,28 @@
+.loginContainer {
+  height: 68vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginBtn {
+  background: #bbe0d2;
+  width: 80%;
+  height: 5vh;
+  margin: 0 auto;
+  border: 2px solid #b8e0d2;
+}
+
+.boxBorder {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  color: #ffffff;
+}
