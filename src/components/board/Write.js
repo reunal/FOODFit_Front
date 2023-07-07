@@ -4,15 +4,20 @@ import axios from "axios";
 import { getSearchData } from "../controller/MenuController";
 import SearchIcon from "@mui/icons-material/Search";
 import { insertPost } from "../controller/BoardController";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Write = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [images, setImages] = useState([]);
+  const [uploadImage, setUploadImage] = useState([]);
   const [tagList, setTagList] = useState([1]);
   const [searchData, setSearchData] = useState([]);
   const [tagText, setTagText] = useState("");
   const [preloadImages, setPreloadImages] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { id, description, images, tags } = location.state;
 
   const onUpdateSearchData = async () => {
     const res = await getSearchData(tagText);
@@ -37,14 +42,18 @@ const Write = () => {
       const formData = new FormData();
 
       formData.append("content", content);
-      formData.append("images", images);
+      formData.append("uploadImage", uploadImage);
       formData.append("tagList", tagList);
 
       const res = await insertPost(formData);
 
-      if (!res) alert("다시 등록해 주세요!");
+      if (!res) {
+        alert("다시 등록해 주세요!");
+        return;
+      }
+      // navigate("/board");
     } catch (err) {
-      console.log(err);
+      alert("다시 등록해 주세요!");
     }
   };
 
@@ -82,7 +91,7 @@ const Write = () => {
   const onUpload = (e) => {
     const files = [...e.target.files];
     files.forEach((file) => {
-      setImages([...images, file]);
+      setUploadImage([...uploadImage, file]);
     });
   };
 

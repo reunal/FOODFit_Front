@@ -5,7 +5,7 @@ import "../../styles/login/Login.css";
 const Login = () => {
   const KAKAO_URL = ``;
   const test = async () => {
-    window.location.href = "http://43.201.73.166:8080/api/login/kakao";
+    window.location.href = "http://35.203.173.103/api/login/kakao";
   };
 
   return (
