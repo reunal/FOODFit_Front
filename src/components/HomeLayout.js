@@ -8,6 +8,7 @@ const HomeLayout = () => {
   useEffect(() => {
     const accessToken = searchParams.get("token");
     const isCheck = searchParams.get("additional-info");
+    console.log(accessToken);
 
     if (!accessToken) {
       return;
