@@ -5,7 +5,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CreateIcon from "@mui/icons-material/Create";
 import axios from "axios";
 import { changeLikeStatus, deletePost, getBoardList } from "../controller/BoardController";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const Board = () => {
@@ -62,6 +62,10 @@ const Board = () => {
     window.location.reload();
   };
 
+  const viewMenu = (id) => {
+    navigate("/daily", { state: id });
+  };
+
   return (
     <div className="boardContainer">
       {boardList.map((boardItem, idx) => {
@@ -69,7 +73,11 @@ const Board = () => {
           <div className="post" key={boardItem.id}>
             <div className="header">
               <div className="userProfile">
-                <img className="userImg" src={boardItem.profileImg} alt="error" />
+                <img
+                  className="userImg"
+                  src={boardItem.profileImg ? boardItem.prfileImg : "/default_profile.png"}
+                  alt="error"
+                />
                 <p className="userName">{boardItem.author}</p>
               </div>
               <MoreHorizIcon onClick={() => onChangeOpenState(boardItem.id)} />
@@ -82,7 +90,11 @@ const Board = () => {
               </div>
             )}
             <div className="content">
-              <img className="postImg" src={boardItem.images[0]} alt="error" />
+              <img
+                className="postImg"
+                src={boardItem.images[0] ? boardItem.images[0] : "/default_profile.png"}
+                alt="error"
+              />
               <p onClick={() => onCheckIcon(idx)}>
                 {boardItem.isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               </p>
@@ -91,7 +103,7 @@ const Board = () => {
             <div className="tagBox">
               {boardItem.tags.map((tag, idx) => {
                 return (
-                  <p key={idx} className="tag">
+                  <p key={idx} className="tag" onClick={() => viewMenu(boardItem.id)}>
                     {tag}
                   </p>
                 );
