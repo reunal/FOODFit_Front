@@ -92,9 +92,7 @@ const Menu = () => {
 
     const list2 = { list: listt };
 
-    console.log(list2);
     const res = await insertMenu(list2);
-    console.log(res);
 
     navigate("/daily");
   };

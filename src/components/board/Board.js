@@ -55,13 +55,18 @@ const Board = () => {
 
   const onDeletePost = async (id) => {
     const res = await deletePost(id);
+    if (!res) {
+      alert("다시 클릭해 주세요");
+      return;
+    }
+    window.location.reload();
   };
 
   return (
     <div className="boardContainer">
       {boardList.map((boardItem, idx) => {
         return (
-          <div className="post" key={idx}>
+          <div className="post" key={boardItem.id}>
             <div className="header">
               <div className="userProfile">
                 <img className="userImg" src={boardItem.profileImg} alt="error" />
@@ -84,8 +89,12 @@ const Board = () => {
               <p>{boardItem.description}</p>
             </div>
             <div className="tagBox">
-              {boardItem.tags.map((tag) => {
-                return <p>tag</p>;
+              {boardItem.tags.map((tag, idx) => {
+                return (
+                  <p key={idx} className="tag">
+                    {tag}
+                  </p>
+                );
               })}
             </div>
           </div>
