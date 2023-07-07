@@ -12,9 +12,9 @@ import DailyCheck from "./components/dailycheck/DailyCheck";
 import MyPage from "./components/mypage/MyPage";
 import PeriodCheck from "./components/periodcheck/PeriodCheck";
 import "./styles/Common.css";
-import MyPage from "./component/mypage/MyPage";
-import DailyCheck from "./component/dailycheck/DailyCheck";
-import PeriodCheck from "./component/periodcheck/PeriodCheck";
+import MyPage from "./components/mypage/MyPage";
+import DailyCheck from "./components/dailycheck/DailyCheck";
+import PeriodCheck from "./components/periodcheck/PeriodCheck";
 
 function App() {
 

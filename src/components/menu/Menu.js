@@ -3,7 +3,7 @@ import "../../styles/menu/Menu.css";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import MenuModal from "./MenuModal";
-import { getSearchData } from "../controller/SearchController";
+import { getSearchData, insertMenu } from "../controller/MenuController";
 
 const data = [
   {
@@ -57,7 +57,7 @@ const Menu = () => {
 
   const onUpdateSearchData = async () => {
     const res = await getSearchData(searchText);
-    setSearchData(res);
+    setSearchData(res.slice(0, 5));
   };
 
   useEffect(() => {
@@ -80,6 +80,19 @@ const Menu = () => {
   const onDeleteItem = (idx) => {
     const newFoodList = foodList.filter((item, index) => index !== idx);
     setFoodList(newFoodList);
+  };
+
+  const onInsertMenu = async () => {
+    const listt = foodList.map((foodItem) => ({
+      foodid: foodItem.id,
+      weight: 100,
+    }));
+
+    const list2 = { list: listt };
+
+    console.log(list2);
+    const res = await insertMenu(list2);
+    console.log(res);
   };
 
   return (
@@ -118,7 +131,7 @@ const Menu = () => {
           return (
             <div className="foodItem boxBorder">
               <p className="text" key={foodItem.id}>
-                {foodItem}
+                {foodItem.name}
               </p>
               <span className="closeBtn" key={idx} onClick={() => onDeleteItem(idx)}>
                 &#x00d7;
@@ -127,7 +140,9 @@ const Menu = () => {
           );
         })}
       </div>
-      <button className="nextBtn button boxBorder text">다음</button>
+      <button className="nextBtn button boxBorder text" onClick={onInsertMenu}>
+        다음
+      </button>
     </div>
   );
 };

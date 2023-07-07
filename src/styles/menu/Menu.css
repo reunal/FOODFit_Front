@@ -42,8 +42,6 @@
 }
 
 .searchData {
-  max-height: 50%;
-  overflow: hidden;
   background-color: #ffffff;
   border: 2px solid #b8e0d2;
   border-radius: 0px 0px 5px 5px;

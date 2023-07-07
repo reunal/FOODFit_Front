@@ -1,29 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/board/Write.css";
 import axios from "axios";
+import { getSearchData } from "../controller/MenuController";
+import SearchIcon from "@mui/icons-material/Search";
+import { insertPost } from "../controller/BoardController";
 
 const Write = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
-  const [tags, setTags] = useState([]);
+  const [tagList, setTagList] = useState([1]);
+  const [searchData, setSearchData] = useState([]);
   const [tagText, setTagText] = useState("");
   const [preloadImages, setPreloadImages] = useState([]);
 
-  const onInsertPost = () => {
-    const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-    try {
-      const data = {
-        content,
-        images,
-        tags,
-      };
-
-      const res = axios.post(`${SERVER_URL}/board`, data);
-    } catch (err) {}
+  const onUpdateSearchData = async () => {
+    const res = await getSearchData(tagText);
+    setSearchData(res.slice(0, 5));
   };
 
-  const readImageDataUrl = (file) => {
+  useEffect(() => {
+    if (tagText === "") {
+      setSearchData("");
+      return;
+    }
+
+    const debounce = setTimeout(() => {
+      if (tagText) onUpdateSearchData();
+    }, 300);
+
+    return () => clearTimeout(debounce);
+  }, [tagText]);
+
+  const onInsertPost = async () => {
+    try {
+      const formData = new FormData();
+
+      formData.append("content", content);
+      formData.append("images", images);
+      formData.append("tagList", tagList);
+
+      const res = await insertPost(formData);
+
+      if (!res) alert("다시 등록해 주세요!");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  /*   const readImageDataUrl = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -37,8 +62,6 @@ const Write = () => {
       };
     });
   };
-
-  const onChangeText = () => {};
 
   const onUpload = async (e) => {
     const files = [...e.target.files];
@@ -54,21 +77,73 @@ const Write = () => {
     } catch (error) {
       console.error(error);
     }
+  }; */
+
+  const onUpload = (e) => {
+    const files = [...e.target.files];
+    files.forEach((file) => {
+      setImages([...images, file]);
+    });
+  };
+
+  const onInsertTag = (idx) => {
+    setTagList([...tagList, searchData[idx].foods]);
+    setSearchData("");
+  };
+
+  const onDeleteItem = (idx) => {
+    const newFoodList = tagList.filter((item, index) => index !== idx);
+    setTagList(newFoodList);
   };
 
   return (
     <div className="WriteContainer">
       <input className="title inputBox" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <textarea
+      <input
         className="content inputBox"
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <input value={tagText} onChange={onChangeText} />
+      <section className="tagSection">
+        <input
+          className="inputBox"
+          placeholder="태그입력"
+          value={tagText}
+          onChange={(e) => setTagText(e.target.value)}
+        />
+        {searchData.length !== 0 ? (
+          <div className="searchData boxBorder">
+            {searchData.map((data, idx) => {
+              return (
+                <p key={idx} onClick={() => onInsertTag(idx)}>
+                  <SearchIcon />
+                  {data.foods.name}
+                </p>
+              );
+            })}
+          </div>
+        ) : null}
+        <div className="tagListBox">
+          {tagList.map((tagItem, idx) => {
+            return (
+              <div className="foodItem boxBorder">
+                <p className="text" key={tagItem.id}>
+                  {tagItem.name}
+                </p>
+                <span className="closeBtn" key={idx} onClick={() => onDeleteItem(idx)}>
+                  &#x00d7;
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
       <input accept="image/*" multiple type="file" onChange={(e) => onUpload(e)} />
-      {preloadImages.map((preloadImage, idx) => {
+      {/* {preloadImages.map((preloadImage, idx) => {
         return <img key={idx} src={preloadImage} style={{ width: "100%" }} />;
-      })}
+      })} */}
+
       <button className="insertBtn button boxBorder text" onClick={onInsertPost}>
         작성하기
       </button>
