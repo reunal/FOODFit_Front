@@ -61,13 +61,13 @@
   fill: pink;
 }
 
-.post .content .tagBox {
+.post .tagBox {
   display: flex;
   flex-wrap: wrap;
   margin-top: 1vh;
 }
 
-.post .content .tag {
+.post .tag {
   background: #bbe0d2;
   border: 1px solid #b8e0d2;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
