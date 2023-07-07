@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-const loginToken = localStorage.getItem("accessToken");
 
 export const getBoardList = async () => {
+  const loginToken = localStorage.getItem("accessToken");
   try {
     const res = await axios.get(`${SERVER_URL}/board`, {
       headers: {
@@ -13,11 +13,12 @@ export const getBoardList = async () => {
     });
     return [...res.data.boardList];
   } catch (error) {
-    return [];
+    return false;
   }
 };
 
 export const insertPost = async (formData) => {
+  const loginToken = localStorage.getItem("accessToken");
   try {
     const res = await axios.post(`${SERVER_URL}/board`, formData, {
       headers: {
@@ -32,6 +33,7 @@ export const insertPost = async (formData) => {
 };
 
 export const updatePost = async (formData) => {
+  const loginToken = localStorage.getItem("accessToken");
   try {
     const res = await axios.put(`${SERVER_URL}/board`, formData, {
       headers: {
@@ -46,8 +48,9 @@ export const updatePost = async (formData) => {
 };
 
 export const deletePost = async (boardId) => {
+  const loginToken = localStorage.getItem("accessToken");
   try {
-    const res = await axios.delete(`${SERVER_URL}/board`, boardId, {
+    const res = await axios.delete(`${SERVER_URL}/board?boardId=${boardId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${loginToken}`,
@@ -60,6 +63,7 @@ export const deletePost = async (boardId) => {
 };
 
 export const changeLikeStatus = async (data) => {
+  const loginToken = localStorage.getItem("accessToken");
   try {
     const res = await axios.post(`${SERVER_URL}/board/like`, data, {
       headers: {

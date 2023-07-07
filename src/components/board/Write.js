@@ -3,26 +3,34 @@ import "../../styles/board/Write.css";
 import axios from "axios";
 import { getSearchData } from "../controller/MenuController";
 import SearchIcon from "@mui/icons-material/Search";
-import { insertPost } from "../controller/BoardController";
+import { insertPost, updatePost } from "../controller/BoardController";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Write = () => {
-  const [title, setTitle] = useState("");
+  const [postId, setPostId] = useState(0);
   const [content, setContent] = useState("");
   const [uploadImage, setUploadImage] = useState([]);
-  const [tagList, setTagList] = useState([1]);
+  const [tagList, setTagList] = useState([]);
   const [searchData, setSearchData] = useState([]);
   const [tagText, setTagText] = useState("");
   const [preloadImages, setPreloadImages] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { id, description, images, tags } = location.state;
-
   const onUpdateSearchData = async () => {
     const res = await getSearchData(tagText);
     setSearchData(res.slice(0, 5));
   };
+
+  useEffect(() => {
+    if (location.state === null) return;
+    const { id, description, images, tags } = location.state;
+
+    setPostId(id);
+    setContent(description);
+    setUploadImage(images);
+    setTagList(tags);
+  }, []);
 
   useEffect(() => {
     if (tagText === "") {
@@ -39,11 +47,13 @@ const Write = () => {
 
   const onInsertPost = async () => {
     try {
+      const tagIdList = tagList.map((tag) => tag.id);
+
       const formData = new FormData();
 
       formData.append("content", content);
-      formData.append("uploadImage", uploadImage);
-      formData.append("tagList", tagList);
+      formData.append("images", uploadImage);
+      formData.append("tags", tagIdList);
 
       const res = await insertPost(formData);
 
@@ -51,7 +61,30 @@ const Write = () => {
         alert("다시 등록해 주세요!");
         return;
       }
-      // navigate("/board");
+      navigate("/board");
+    } catch (err) {
+      alert("다시 등록해 주세요!");
+    }
+  };
+
+  const onUpdatePost = async (idx) => {
+    try {
+      const tagIdList = tagList.map((tag) => tag.id);
+
+      const formData = new FormData();
+
+      formData.append("boardId", postId);
+      formData.append("content", content);
+      formData.append("images", uploadImage);
+      formData.append("tags", tagIdList);
+
+      const res = await updatePost(formData);
+
+      if (!res) {
+        alert("다시 등록해 주세요!");
+        return;
+      }
+      navigate("/board");
     } catch (err) {
       alert("다시 등록해 주세요!");
     }
@@ -89,15 +122,17 @@ const Write = () => {
   }; */
 
   const onUpload = (e) => {
-    const files = [...e.target.files];
+    /*     const files = [...e.target.files];
     files.forEach((file) => {
       setUploadImage([...uploadImage, file]);
-    });
+    }); */
+    setUploadImage(e.target.files[0]);
   };
 
   const onInsertTag = (idx) => {
     setTagList([...tagList, searchData[idx].foods]);
     setSearchData("");
+    setTagText("");
   };
 
   const onDeleteItem = (idx) => {
@@ -107,10 +142,10 @@ const Write = () => {
 
   return (
     <div className="WriteContainer">
-      <input className="title inputBox" value={title} onChange={(e) => setTitle(e.target.value)} />
-      <input
+      <textarea
         className="content inputBox"
         value={content}
+        multiple
         onChange={(e) => setContent(e.target.value)}
       />
       <section className="tagSection">
@@ -124,7 +159,7 @@ const Write = () => {
           <div className="searchData boxBorder">
             {searchData.map((data, idx) => {
               return (
-                <p key={idx} onClick={() => onInsertTag(idx)}>
+                <p key={data.id} onClick={() => onInsertTag(idx)}>
                   <SearchIcon />
                   {data.foods.name}
                 </p>
@@ -153,9 +188,15 @@ const Write = () => {
         return <img key={idx} src={preloadImage} style={{ width: "100%" }} />;
       })} */}
 
-      <button className="insertBtn button boxBorder text" onClick={onInsertPost}>
-        작성하기
-      </button>
+      {postId === 0 ? (
+        <button className="insertBtn button boxBorder text" onClick={onInsertPost}>
+          작성하기
+        </button>
+      ) : (
+        <button className="insertBtn button boxBorder text" onClick={onUpdatePost}>
+          수정하기
+        </button>
+      )}
     </div>
   );
 };
