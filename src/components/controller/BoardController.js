@@ -3,6 +3,20 @@ import axios from "axios";
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 const loginToken = localStorage.getItem("accessToken");
 
+export const getBoardList = async () => {
+  try {
+    const res = await axios.get(`${SERVER_URL}/board`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${loginToken}`,
+      },
+    });
+    return [...res.data.boardList];
+  } catch (error) {
+    return [];
+  }
+};
+
 export const insertPost = async (formData) => {
   try {
     const res = await axios.post(`${SERVER_URL}/board`, formData, {
@@ -17,17 +31,31 @@ export const insertPost = async (formData) => {
   }
 };
 
-export const getBoardList = async () => {
+export const updatePost = async (formData) => {
   try {
-    const res = await axios.get(`${SERVER_URL}/board`, {
+    const res = await axios.put(`${SERVER_URL}/board`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${loginToken}`,
+      },
+    });
+    return res;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const deletePost = async (boardId) => {
+  try {
+    const res = await axios.delete(`${SERVER_URL}/board`, boardId, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${loginToken}`,
       },
     });
-    return [...res.data.boardList];
+    return res;
   } catch (error) {
-    return [];
+    return false;
   }
 };
 
