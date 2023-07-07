@@ -1,10 +1,9 @@
 import axios from "axios";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-const loginToken = localStorage.getItem("accessToken");
 
 export const getUserData = async () => {
-  console.log(loginToken);
+  const loginToken = localStorage.getItem("accessToken");
   try {
     const res = await axios.get(`${SERVER_URL}/user`, {
       headers: {
