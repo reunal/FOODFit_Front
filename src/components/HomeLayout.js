@@ -18,14 +18,13 @@ const HomeLayout = () => {
     const accessToken = searchParams.get("token");
     const isCheck = searchParams.get("additional-info");
 
-    accessToken && localStorage.setItem("accessToken", accessToken);
-    console.log("tettt:L ", localStorage.getItem("accessToken"));
-    if (!localStorage.getItem("accessToken")) {
+    if (!accessToken) {
       navigate("/login");
+    } else {
+      localStorage.setItem("accessToken", accessToken);
     }
 
     getUser();
-    console.log(isCheck);
 
     if (isCheck === false) navigate("/mypage");
   }, []);
