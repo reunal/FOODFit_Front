@@ -125,12 +125,13 @@ const Write = () => {
   };*/
 
   const onUpload = (e) => {
-    const files = [...e.target.files];
+    /* const files = [...e.target.files];
     files.forEach((file) => {
       setUploadImage([...uploadImage, file]);
     });
     console.log(files);
-    console.log(location.state);
+    console.log(location.state); */
+    setUploadImage([e.target.files[0]]);
   };
 
   const onInsertTag = (idx) => {
