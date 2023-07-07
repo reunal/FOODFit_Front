@@ -4,6 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import MenuModal from "./MenuModal";
 import { getSearchData, insertMenu } from "../controller/MenuController";
+import { useNavigate } from "react-router-dom";
 
 const data = [
   {
@@ -54,6 +55,7 @@ const Menu = () => {
   const [dataIdx, setDataIdx] = useState(0);
   const [foodList, setFoodList] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const onUpdateSearchData = async () => {
     const res = await getSearchData(searchText);
@@ -63,7 +65,7 @@ const Menu = () => {
   useEffect(() => {
     const debounce = setTimeout(() => {
       if (searchText) onUpdateSearchData();
-    }, 300);
+    }, 200);
 
     return () => clearTimeout(debounce);
   }, [searchText]);
@@ -93,6 +95,8 @@ const Menu = () => {
     console.log(list2);
     const res = await insertMenu(list2);
     console.log(res);
+
+    navigate("/daily");
   };
 
   return (

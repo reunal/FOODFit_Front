@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+const loginToken = localStorage.getItem("accessToken");
 
 export const getSearchData = async (searchText) => {
   try {
@@ -12,7 +13,6 @@ export const getSearchData = async (searchText) => {
 };
 
 export const insertMenu = async (list) => {
-  const loginToken = localStorage.getItem("accessToken");
   try {
     const res = await axios.post(`${SERVER_URL}/foods`, list, {
       headers: {
