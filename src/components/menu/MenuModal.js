@@ -9,7 +9,8 @@ const MenuModal = ({ modalOpen, onChangeModalOpen, foodList, setFoodList, data }
   };
 
   const onInsertFood = () => {
-    setFoodList([...foodList, name]);
+    setFoodList([...foodList, data.foods]);
+    console.log(foodList);
     onChangeModalOpen();
   };
 
