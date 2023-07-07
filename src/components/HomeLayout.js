@@ -18,15 +18,16 @@ const HomeLayout = () => {
     const accessToken = searchParams.get("token");
     const isCheck = searchParams.get("additional-info");
 
-    localStorage.setItem("accessToken", accessToken);
+    accessToken && localStorage.setItem("accessToken", accessToken);
     console.log("tettt:L ", localStorage.getItem("accessToken"));
     if (!localStorage.getItem("accessToken")) {
       navigate("/login");
     }
 
     getUser();
+    console.log(isCheck);
 
-    if (isCheck && window.confirm("넘어가겠습니까?")) navigate("/mypage");
+    if (isCheck === false) navigate("/mypage");
   }, []);
 
   const onLogout = () => {
@@ -36,8 +37,11 @@ const HomeLayout = () => {
 
   return (
     <div className="mainLayout">
-      <div className="profileImg">
-        <img src={userData.profileImage ? userData.profileImage : "/default_profile.png"} />
+      <div className="user_profile">
+        <img
+          className="profile_img"
+          src={userData.profileImage ? userData.profileImage : "/default_profile.png"}
+        />
       </div>
       <div className="info">
         {userData.name}님 환영합니다.
