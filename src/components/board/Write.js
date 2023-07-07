@@ -28,7 +28,7 @@ const Write = () => {
 
     setPostId(id);
     setContent(description);
-    setUploadImage(images);
+    // setUploadImage(images);
     setTagList(tags);
   }, []);
 
@@ -70,12 +70,13 @@ const Write = () => {
   const onUpdatePost = async (idx) => {
     try {
       const tagIdList = tagList.map((tag) => tag.id);
+      console.log(tagIdList);
 
       const formData = new FormData();
 
       formData.append("boardId", postId);
       formData.append("content", content);
-      formData.append("images", uploadImage);
+      formData.append("images", preloadImages);
       formData.append("tags", tagIdList);
 
       const res = await updatePost(formData);
@@ -90,7 +91,7 @@ const Write = () => {
     }
   };
 
-  /*   const readImageDataUrl = (file) => {
+  const readImageDataUrl = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -119,15 +120,16 @@ const Write = () => {
     } catch (error) {
       console.error(error);
     }
-  }; */
+  };
 
-  const onUpload = (e) => {
-    /*     const files = [...e.target.files];
+  /* const onUpload = (e) => {
+    const files = [...e.target.files];
     files.forEach((file) => {
       setUploadImage([...uploadImage, file]);
-    }); */
-    setUploadImage(e.target.files[0]);
-  };
+    });
+    console.log(files);
+    console.log(location.state);
+  }; */
 
   const onInsertTag = (idx) => {
     setTagList([...tagList, searchData[idx].foods]);
@@ -170,7 +172,7 @@ const Write = () => {
         <div className="tagListBox">
           {tagList.map((tagItem, idx) => {
             return (
-              <div className="foodItem boxBorder">
+              <div className="foodItem boxBorder" key={tagItem.id}>
                 <p className="text" key={tagItem.id}>
                   {tagItem.name}
                 </p>
@@ -184,9 +186,9 @@ const Write = () => {
       </section>
 
       <input accept="image/*" multiple type="file" onChange={(e) => onUpload(e)} />
-      {/* {preloadImages.map((preloadImage, idx) => {
+      {preloadImages.map((preloadImage, idx) => {
         return <img key={idx} src={preloadImage} style={{ width: "100%" }} />;
-      })} */}
+      })}
 
       {postId === 0 ? (
         <button className="insertBtn button boxBorder text" onClick={onInsertPost}>
