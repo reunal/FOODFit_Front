@@ -10,7 +10,7 @@ const HomeLayout = () => {
 
   const getUser = async () => {
     const res = await getUserData();
-    if (!res) navigate("/login");
+    // if (!res) navigate("/login");
     setUserData(res);
   };
 
@@ -18,10 +18,10 @@ const HomeLayout = () => {
     const accessToken = searchParams.get("token");
     const isCheck = searchParams.get("additional-info");
 
-    if (!accessToken) {
+    if (localStorage.getItem("accessToken") === null && accessToken === null) {
       navigate("/login");
     } else {
-      localStorage.setItem("accessToken", accessToken);
+      accessToken !== null && localStorage.setItem("accessToken", accessToken);
     }
 
     getUser();
