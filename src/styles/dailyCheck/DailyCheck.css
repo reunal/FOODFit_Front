@@ -1,57 +1,57 @@
 .element {
-  display: inline-block;
-  margin: 0;
-  padding-left: 2%;
-  font-size: 10px;
+    display: inline-block;
+    margin: 0;
+    padding-left: 2%;
+    font-size: 10px;
 }
 
 .bar {
-  margin: 12% 2% 12% 2%;
+    margin: 12% 2% 12% 2%;
 }
 
 .progress {
-  float: right;
-  width: 80%;
+    float: right;
+    width: 80%;
 }
 
 .container1 {
-  background-color: white;
-  border: 2px solid #b2f7ef;
-  border-radius: 50px;
-  width: 100%;
+    background-color: white;
+    border: 2px solid #b2f7ef;
+    border-radius: 50px;
+    width: 100%;
 }
 
 .container2 {
-  background-color: white;
-  border: 2px solid #7bdef2;
-  border-radius: 50px;
-  width: 100%;
+    background-color: white;
+    border: 2px solid #7bdef2;
+    border-radius: 50px;
+    width: 100%;
 }
 
 .container3 {
-  background-color: white;
-  border: 2px solid #e7d6e0;
-  border-radius: 50px;
-  width: 100%;
+    background-color: white;
+    border: 2px solid #e7d6e0;
+    border-radius: 50px;
+    width: 100%;
 }
 
 .container4 {
-  background-color: white;
-  border: 2px solid #f2b5d4;
-  border-radius: 50px;
-  width: 100%;
+    background-color: white;
+    border: 2px solid #f2b5d4;
+    border-radius: 50px;
+    width: 100%;
 }
 
 .classify_graph {
-  background-color: white;
-  margin: 2%;
-  margin-top: 14%;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px #cccccc;
+    background-color: white;
+    margin: 2%;
+    margin-top: 14%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px #cccccc;
 }
 
 .description {
-  text-align: left;
-  padding: 20px 20px 20px 20px;
-  font-size: 10px;
+    text-align: left;
+    padding: 4% 4% 4% 4%;
+    font-size: 12px;
 }
