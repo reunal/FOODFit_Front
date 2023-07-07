@@ -5,7 +5,6 @@ import axios from "axios";
 const API_URL = "http://43.201.73.166:8080";
 
 const MyPage = () => {
-
     const navigate = useNavigate();
     const [name, setName] = useState("");
     const [age, setAge] = useState("");
@@ -28,8 +27,6 @@ const MyPage = () => {
         };
         reader.readAsDataURL(e.target.files[0]);
     };
-    reader.readAsDataURL(e.target.files[0]);
-  };
 
     const handleSelectGender = (e) => {
         setGender(e.target.value);
@@ -58,23 +55,11 @@ const MyPage = () => {
                 console.error("save failed");
             });
     };
-    let token = localStorage.getItem("accessToken");
 
-    await axios
-      .put(`${API_URL}/api/user`, userData, {
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: `Bearer ${localStorage.getItem(token)}`,
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        alert("save success");
-      })
-      .catch((error) => {
-        console.error("save failed");
-      });
-  };
+    const moveHomePage = () => {
+        navigate("/");
+    };
+
     useEffect(() => {
         (async () => {
             try {
@@ -97,8 +82,6 @@ const MyPage = () => {
             }
         })();
     }, []);
-
-    console.log("이미지", profileImage.length);
 
     if (profileImage.length == 0) {
         setProfileImage("default_profile.png");
@@ -173,17 +156,7 @@ const MyPage = () => {
                 </button>
             </div>
         </div>
-      </div>
-      <div className="button_group">
-        <button className="modify_btn" onClick={saveUserInfo}>
-          저장
-        </button>
-        <button className="home_btn" onClick={moveHomePage}>
-          홈으로
-        </button>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default MyPage;
