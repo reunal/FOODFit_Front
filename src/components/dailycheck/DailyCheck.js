@@ -24,52 +24,6 @@ const DailyCheck = () => {
     });
 
     useEffect(() => {
-        const text = () => {
-            const nutrients = ["calorie", "protein", "fat", "salt"];
-
-            for (let i = 0; i < nutrients.length; i++) {
-                const nutrient = nutrients[i];
-                const recommendedAmount =
-                    progressData[
-                        `recommended${
-                            nutrient.charAt(0).toUpperCase() + nutrient.slice(1)
-                        }PerDay`
-                    ];
-                const totalAmount =
-                    progressData[
-                        `total${
-                            nutrient.charAt(0).toUpperCase() + nutrient.slice(1)
-                        }PerDay`
-                    ];
-                const textGoodKey = `${nutrient}GoodText`;
-                const textOverKey = `${nutrient}OverText`;
-                const textLackKey = `${nutrient}LackText`;
-
-                if (
-                    Math.abs(recommendedAmount - totalAmount) <=
-                    recommendedAmount * 0.1
-                ) {
-                    setAnalysisText((prevAnalysisText) => ({
-                        ...prevAnalysisText,
-                        [nutrient]: textData[textGoodKey],
-                    }));
-                } else if (
-                    recommendedAmount - totalAmount <
-                    -recommendedAmount * 0.1
-                ) {
-                    setAnalysisText((prevAnalysisText) => ({
-                        ...prevAnalysisText,
-                        [nutrient]: textData[textOverKey],
-                    }));
-                } else {
-                    setAnalysisText((prevAnalysisText) => ({
-                        ...prevAnalysisText,
-                        [nutrient]: textData[textLackKey],
-                    }));
-                }
-            }
-        };
-
         const fetchData = async () => {
             try {
                 let token = localStorage.getItem("accessToken");
@@ -84,7 +38,7 @@ const DailyCheck = () => {
                 const intakeData = res.data;
                 setProgressData(intakeData);
                 console.log(intakeData);
-                text();
+                text(intakeData);
             } catch (error) {
                 console.error("intakeData bring Failed!");
             }
@@ -92,6 +46,52 @@ const DailyCheck = () => {
 
         fetchData();
     }, []);
+
+    const text = () => {
+        const nutrients = ["calorie", "protein", "fat", "salt"];
+
+        for (let i = 0; i < nutrients.length; i++) {
+            const nutrient = nutrients[i];
+            const recommendedAmount =
+                progressData[
+                    `recommended${
+                        nutrient.charAt(0).toUpperCase() + nutrient.slice(1)
+                    }PerDay`
+                ];
+            const totalAmount =
+                progressData[
+                    `total${
+                        nutrient.charAt(0).toUpperCase() + nutrient.slice(1)
+                    }PerDay`
+                ];
+            const textGoodKey = `${nutrient}GoodText`;
+            const textOverKey = `${nutrient}OverText`;
+            const textLackKey = `${nutrient}LackText`;
+
+            if (
+                Math.abs(recommendedAmount - totalAmount) <=
+                recommendedAmount * 0.1
+            ) {
+                setAnalysisText((prevAnalysisText) => ({
+                    ...prevAnalysisText,
+                    [nutrient]: textData[textGoodKey],
+                }));
+            } else if (
+                recommendedAmount - totalAmount <
+                -recommendedAmount * 0.1
+            ) {
+                setAnalysisText((prevAnalysisText) => ({
+                    ...prevAnalysisText,
+                    [nutrient]: textData[textOverKey],
+                }));
+            } else {
+                setAnalysisText((prevAnalysisText) => ({
+                    ...prevAnalysisText,
+                    [nutrient]: textData[textLackKey],
+                }));
+            }
+        }
+    };
 
     return (
         <div className="daily_page">
