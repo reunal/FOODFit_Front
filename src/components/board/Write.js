@@ -50,6 +50,7 @@ const Write = () => {
       const tagIdList = tagList.map((tag) => tag.id);
 
       const formData = new FormData();
+      console.log(uploadImage);
 
       formData.append("content", content);
       formData.append("images", uploadImage);
@@ -91,6 +92,7 @@ const Write = () => {
     }
   };
 
+  /*
   const readImageDataUrl = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -120,16 +122,16 @@ const Write = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  };*/
 
-  /* const onUpload = (e) => {
+  const onUpload = (e) => {
     const files = [...e.target.files];
     files.forEach((file) => {
       setUploadImage([...uploadImage, file]);
     });
     console.log(files);
     console.log(location.state);
-  }; */
+  };
 
   const onInsertTag = (idx) => {
     setTagList([...tagList, searchData[idx].foods]);
