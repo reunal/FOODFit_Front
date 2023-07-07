@@ -34,6 +34,10 @@ const MyPage = () => {
   };
 
   const saveUserInfo = async () => {
+    if (age >= 110) {
+      alert("나이는 110살 이하로 설정해야 합니다.");
+      return;
+    }
     const userData = {
       name: name,
       age: age,
