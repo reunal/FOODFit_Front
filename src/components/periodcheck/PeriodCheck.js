@@ -43,7 +43,6 @@ const PeriodCheck = () => {
         const fetchTypeData = async () => {
             try {
                 setDataList([]);
-                console.log("mm", dataList);
                 let token = localStorage.getItem("accessToken");
                 const res = await axios.get(
                     `${API_URL}/api/analysis/period?startDate=${moment(
@@ -62,7 +61,6 @@ const PeriodCheck = () => {
                 const periodData = res.data;
                 setPeriodData(() => periodData);
                 period(periodData);
-                console.log("dd", dataList);
             } catch {
                 console.error("periodData bring Failed!");
             }
@@ -70,14 +68,11 @@ const PeriodCheck = () => {
         fetchTypeData();
     }, [startDate, endDate, selectedType]);
 
-    console.log("select", selectedType);
     const period = (periodData) => {
         setDataList([]);
         let periodDataLength = Math.min(periodData.amountList.length, 90);
 
         const t = Math.ceil(periodDataLength / 7);
-        console.log("t", t);
-        console.log("aa", dataList);
         for (let i = 0; i < t; i++) {
             const start = i * 7;
             const end = Math.min((i + 1) * 7, periodDataLength);
@@ -86,7 +81,6 @@ const PeriodCheck = () => {
                 ...prevDataList,
                 periodData.amountList.slice(start, end),
             ]);
-            console.log("dd", dataList);
         }
     };
 
@@ -105,8 +99,6 @@ const PeriodCheck = () => {
         protein: 50,
         fat: 70,
     };
-
-    console.log("DATA" + JSON.stringify(dataList));
 
     return (
         <div className="period_page">
