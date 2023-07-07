@@ -10,17 +10,36 @@
 .header {
   display: flex;
   height: 10%;
+  justify-content: space-between;
   align-items: center;
-  margin-left: 3%;
+  margin: 0 4%;
+}
+
+.header .userProfile {
+  width: 50%;
+  display: flex;
+  align-items: center;
 }
 
 .header img {
+  width: 10%;
   height: 100%;
   border-radius: 50%;
 }
 
 .header .userName {
   margin-left: 5%;
+}
+
+.postOption {
+  float: right;
+  margin-right: 4%;
+  padding: 1% 2%;
+  background-color: #b8e0d2;
+}
+
+.postOption p {
+  margin: 1vh 0;
 }
 
 .post .content {
@@ -36,6 +55,10 @@
   object-fit: contain;
   margin-left: -3%;
   border: 1px solid black;
+}
+
+.post .content svg {
+  fill: pink;
 }
 
 .post .content .tagBox {
