@@ -60,6 +60,7 @@ const PeriodCheck = () => {
                 const periodData = res.data;
                 setPeriodData(() => periodData);
                 period(periodData);
+                console.log(periodData);
             } catch {
                 console.error("periodData bring Failed!");
             }
