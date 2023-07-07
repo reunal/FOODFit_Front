@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "../styles/HomeLayout.css";
-import { getUserData } from "./controller/UseController";
+import { getUserData } from "./controller/UserController";
 
 const HomeLayout = () => {
   const navigate = useNavigate();
